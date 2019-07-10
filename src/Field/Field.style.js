@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
 
-export const content = css`
+export const wrapper = css`
   font-size: large;
 `;

@@ -86,6 +86,8 @@
     "react": "^16.8.6",
     "react-cache": "^2.0.0-alpha.1",
     "react-dom": "^16.8.6",
+    "react-konva": "^16.8.7-3",
+    "react-measure": "^2.3.0",
     "recompose": "^0.30.0",
     "rimraf": "^2.6.3",
     "rollup": "1.15.0",
