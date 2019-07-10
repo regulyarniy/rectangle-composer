@@ -53,6 +53,7 @@ module.exports = {
       },
     ],
     'babel-plugin-styled-components',
+    ['babel-plugin-react-docgen', {}, 'react-docgen'],
   ],
   env: {
     commonjs: {
