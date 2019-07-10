@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Measure from 'react-measure';
-import { Stage, Layer, Group, Image, Text } from 'react-konva';
 import * as styles from './Field.style';
 
 const MainWrapper = styled.div`
@@ -19,7 +18,7 @@ const GridWrapper = styled.div`
 const Field = ({ wrapperClassName, gridClassName, gridOffset, children }) => {
   const { top = 0, left = 0, bottom = 0, right = 0 } = gridOffset;
 
-  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+  const [, setContainerSize] = useState({ width: 0, height: 0 });
 
   const handleContainerResize = contentRect => {
     setContainerSize({
@@ -28,7 +27,7 @@ const Field = ({ wrapperClassName, gridClassName, gridOffset, children }) => {
     });
   };
 
-  const [gridSize, setGridSize] = useState({
+  const [, setGridSize] = useState({
     x: 0,
     y: 0,
     width: 0,
