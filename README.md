@@ -12,3 +12,7 @@ A React component for visual editing rectangles in 2D plane
 ## Boilerplate used
 
 [React Rollup Boilerplate](https://github.com/psychobolt/react-rollup-boilerplate)
+
+## Demo
+
+[Storybook with use cases](https://regulyarniy.github.io/rectangle-composer/)
