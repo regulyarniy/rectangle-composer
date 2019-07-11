@@ -1,24 +1,24 @@
 import React, { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 import { doc } from 'storybook-readme';
-import { text, object } from '@storybook/addon-knobs';
+import { text, number, color, object } from '@storybook/addon-knobs';
 import { Rect, Text } from 'react-konva';
 
-import { Field } from '../src';
+import { Field, Rectangle } from '../src';
 import Readme from '../README.md';
-
+import { PresetField } from './PresetField';
 
 storiesOf('Documentation', module)
   .add('Readme', doc(Readme));
 
-storiesOf('Components', module)
+storiesOf('Field', module)
   .addParameters({
     props: {
       propTables: [Field],
       propTablesExclude: [Fragment],
     },
   })
-  .add('Field', () => {
+  .add('styled field', () => {
     const wrapperStyles = text('wrapper styles', 'background-color: #C0D6DF; width: 100%; height: 400px;');
     const gridStyles = text('grid styles', 'background-color: #DD6E42;');
     const Child = () => <div className="axis" />;
@@ -46,5 +46,39 @@ storiesOf('Components', module)
           <Text text="Click on stage" y={100} x={200} />
         </Field>
       </Fragment>
+    );
+  });
+
+storiesOf('Rectangle')
+  .addParameters({
+    props: {
+      propTables: [Rectangle],
+      propTablesExclude: [PresetField],
+    },
+  })
+  .add('without children', () => {
+    const x = number('x', 50);
+    const y = number('y', 50);
+    const width = number('width', 50);
+    const height = number('height', 50);
+    const fill = color('custom fill', '#98E3C2');
+    return (
+      <PresetField>
+        <Rectangle x={x} y={y} width={width} height={height} fill={fill} />
+      </PresetField>
+    );
+  })
+  .add('with children', () => {
+    const x = number('x', 50);
+    const y = number('y', 50);
+    const width = number('width', 50);
+    const height = number('height', 50);
+    const fill = color('custom fill', '#98E3C2');
+    return (
+      <PresetField>
+        <Rectangle x={x} y={y} width={width} height={height} fill={fill}>
+          <Text text="child node" y={25} x={0} />
+        </Rectangle>
+      </PresetField>
     );
   });
