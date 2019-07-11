@@ -13,14 +13,14 @@ import { EditableRectangleStory } from './EditableRectangle.story';
 storiesOf('Documentation', module)
   .add('Readme', doc(Readme));
 
-storiesOf('Field', module)
+storiesOf('Components', module)
   .addParameters({
     props: {
       propTables: [Field],
       propTablesExclude: [Fragment],
     },
   })
-  .add('styled field', () => {
+  .add('Field', () => {
     const wrapperStyles = text('wrapper styles', 'background-color: #C0D6DF; width: 100%; height: 400px;');
     const gridStyles = text('grid styles', 'background-color: #DD6E42;');
     const Child = () => <div className="axis" />;
@@ -49,16 +49,14 @@ storiesOf('Field', module)
         </Field>
       </Fragment>
     );
-  });
-
-storiesOf('Rectangle', module)
+  })
   .addParameters({
     props: {
       propTables: [Rectangle],
       propTablesExclude: [PresetField],
     },
   })
-  .add('without children', () => {
+  .add('Rectangle', () => {
     const x = number('x', 50);
     const y = number('y', 50);
     const width = number('width', 50);
@@ -70,7 +68,7 @@ storiesOf('Rectangle', module)
       </PresetField>
     );
   })
-  .add('with children', () => {
+  .add('Rectangle with children', () => {
     const x = number('x', 50);
     const y = number('y', 50);
     const width = number('width', 50);
@@ -83,14 +81,11 @@ storiesOf('Rectangle', module)
         </Rectangle>
       </PresetField>
     );
-  });
-
-
-storiesOf('EditableRectangle', module)
+  })
   .addParameters({
     props: {
       propTables: [EditableRectangle],
       propTablesExclude: [EditableRectangleStory],
     },
   })
-  .add('editable', () => <EditableRectangleStory />);
+  .add('EditableRectangle', () => <EditableRectangleStory />);

@@ -8,6 +8,9 @@ let debounceCoordinatesChangeTimeout = null;
 const DEBOUNCE_DELAY = 10;
 const TWEEN_DURATION = 0.3;
 
+/**
+ * Draggable & Resizable Rectangle
+ */
 const EditableRectangle = props => {
   const {
     children,
