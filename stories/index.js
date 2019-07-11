@@ -2,8 +2,9 @@ import React, { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 import { doc } from 'storybook-readme';
 import { text, object } from '@storybook/addon-knobs';
+import { Rect } from 'react-konva';
 
-import { Field } from 'src';
+import { Field } from '../src';
 import Readme from '../README.md';
 
 
@@ -18,7 +19,7 @@ storiesOf('Components', module)
     },
   })
   .add('Field', () => {
-    const wrapperStyles = text('wrapper styles', 'background-color: #C0D6DF; width: 100%; height: 500px;');
+    const wrapperStyles = text('wrapper styles', 'background-color: #C0D6DF; width: 100%; height: 400px;');
     const gridStyles = text('grid styles', 'background-color: #DD6E42;');
     const Child = () => <div className="axis" />;
     return (
@@ -31,9 +32,17 @@ storiesOf('Components', module)
         <Field
           wrapperClassName={text('Prop: wrapperClassName', 'wrapperClassName')}
           gridClassName={text('Prop: gridClassName', 'gridClassName')}
-          gridOffset={object('Prop: gridOffset', { top: 100, left: 120, right: 20, bottom: 15 })}
+          gridOffset={object('Prop: gridOffset', { top: 100, left: 120, right: 200, bottom: 150 })}
+          preContent={<Child />}
+          stageProps={{ onClick: () => { alert('stage click'); } }}
         >
-          <Child />
+          <Rect
+            x={100}
+            y={50}
+            width={50}
+            height={50}
+            fill="blue"
+          />
         </Field>
       </Fragment>
     );
