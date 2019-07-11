@@ -15,7 +15,8 @@
         "react/no-multi-comp": 0,
         "import/prefer-default-export": 0,
         "object-curly-newline": ["error", { "consistent": true }],
-        "no-bitwise": ["error", { "int32Hint": true }]
+        "no-bitwise": ["error", { "int32Hint": true }],
+        "no-console": "error"
     },
     "env": {
         "jest/globals": true,
