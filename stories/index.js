@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { doc } from 'storybook-readme';
 import { text, number, color, object } from '@storybook/addon-knobs';
 import { Rect, Text } from 'react-konva';
+import { action } from '@storybook/addon-actions';
 
 import { Field, Rectangle } from '../src';
 import Readme from '../README.md';
@@ -34,7 +35,7 @@ storiesOf('Field', module)
           gridClassName={text('Prop: gridClassName', 'gridClassName')}
           gridOffset={object('Prop: gridOffset', { top: 100, left: 120, right: 200, bottom: 150 })}
           preContent={<Child />}
-          stageProps={{ onClick: () => { alert('stage click'); } }}
+          stageProps={{ onClick: action('stage-click') }}
         >
           <Rect
             x={100}
@@ -49,7 +50,7 @@ storiesOf('Field', module)
     );
   });
 
-storiesOf('Rectangle')
+storiesOf('Rectangle', module)
   .addParameters({
     props: {
       propTables: [Rectangle],
