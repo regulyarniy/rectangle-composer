@@ -7,10 +7,10 @@ import { Group, Rect } from 'react-konva';
  * In compare with <Rect/> the <Rectangle/> can contain nested components
  */
 const Rectangle = props => {
-  const { x, y, width, height, children, ...rectProps } = props;
+  const { x, y, width, height, children, forwardRef, ...rectProps } = props;
   return (
     <Group x={x} y={y}>
-      <Rect width={width} height={height} {...rectProps} />
+      <Rect ref={forwardRef} width={width} height={height} {...rectProps} />
       {children}
     </Group>
   );
@@ -38,6 +38,10 @@ Rectangle.propTypes = {
    * pass any valid nodes for react-konva <Group/> children
    */
   children: PropTypes.node,
+  /**
+   * forwarded ref to <Rect/>
+   */
+  forwardRef: PropTypes.shape({}),
 };
 
 Rectangle.defaultProps = {
@@ -46,6 +50,7 @@ Rectangle.defaultProps = {
   width: 0,
   height: 0,
   children: null,
+  forwardRef: undefined,
 };
 
 export default Rectangle;

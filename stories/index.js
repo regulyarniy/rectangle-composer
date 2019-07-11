@@ -5,9 +5,10 @@ import { text, number, color, object } from '@storybook/addon-knobs';
 import { Rect, Text } from 'react-konva';
 import { action } from '@storybook/addon-actions';
 
-import { Field, Rectangle } from '../src';
+import { Field, Rectangle, EditableRectangle } from '../src';
 import Readme from '../README.md';
 import { PresetField } from './PresetField';
+import { EditableRectangleStory } from './EditableRectangle.story';
 
 storiesOf('Documentation', module)
   .add('Readme', doc(Readme));
@@ -83,3 +84,13 @@ storiesOf('Rectangle', module)
       </PresetField>
     );
   });
+
+
+storiesOf('EditableRectangle', module)
+  .addParameters({
+    props: {
+      propTables: [EditableRectangle],
+      propTablesExclude: [EditableRectangleStory],
+    },
+  })
+  .add('editable', () => <EditableRectangleStory />);
