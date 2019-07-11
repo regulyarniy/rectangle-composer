@@ -5,7 +5,7 @@ import { text, number, color, object } from '@storybook/addon-knobs';
 import { Rect, Text } from 'react-konva';
 import { action } from '@storybook/addon-actions';
 
-import { Field, Rectangle, EditableRectangle } from '../src';
+import { Field, Rectangle, EditableRectangle, Composer } from '../src';
 import Readme from '../README.md';
 import { PresetField } from './PresetField';
 import { EditableRectangleStory } from './EditableRectangle.story';
@@ -88,4 +88,21 @@ storiesOf('Components', module)
       propTablesExclude: [EditableRectangleStory],
     },
   })
-  .add('EditableRectangle', () => <EditableRectangleStory />);
+  .add('EditableRectangle', () => <EditableRectangleStory />)
+  .addParameters({
+    props: {
+      propTables: [Composer],
+      propTablesExclude: [],
+    },
+  })
+  .add('Composer', () => (
+    <Composer
+      initialRectangles={[
+        object('blue rect', { top: 10, bottom: 50, left: 100, right: 200, fill: 'blue' }),
+        object('red rect', { top: 60, bottom: 120, left: 0, right: 390, fill: 'red' }),
+        object('green rect', { top: 150, bottom: 200, left: 100, right: 200, fill: 'green' }),
+      ]}
+      relativeWidth={number('relativeWidth', 400)}
+      relativeHeight={number('relativeHeight', 400)}
+    />
+  ));
