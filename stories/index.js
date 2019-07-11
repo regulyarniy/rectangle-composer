@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 import { doc } from 'storybook-readme';
 import { text, object } from '@storybook/addon-knobs';
-import { Rect } from 'react-konva';
+import { Rect, Text } from 'react-konva';
 
 import { Field } from '../src';
 import Readme from '../README.md';
@@ -15,7 +15,7 @@ storiesOf('Components', module)
   .addParameters({
     props: {
       propTables: [Field],
-      propTablesExclude: [Fragment, 'Child', 'style'],
+      propTablesExclude: [Fragment],
     },
   })
   .add('Field', () => {
@@ -27,7 +27,7 @@ storiesOf('Components', module)
         <style>
           {`.wrapperClassName.wrapperClassName {${wrapperStyles}}`}
           {`.wrapperClassName .gridClassName {${gridStyles}}`}
-          {'.axis {position: absolute; left: 10px; width: 10px; height: 90%; border: 1px dashed black;}'}
+          {'.axis {position: absolute; left: 10px; top: 5%; width: 10px; height: 90%; border: 1px dashed black;}'}
         </style>
         <Field
           wrapperClassName={text('Prop: wrapperClassName', 'wrapperClassName')}
@@ -43,6 +43,7 @@ storiesOf('Components', module)
             height={50}
             fill="blue"
           />
+          <Text text="Click on stage" y={100} x={200} />
         </Field>
       </Fragment>
     );
