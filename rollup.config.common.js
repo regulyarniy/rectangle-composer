@@ -41,6 +41,8 @@ const config = {
     'react',
     'react-dom',
     'react-is',
+    'react-konva',
+    'react-measure',
     'styled-components',
   ],
 };
