@@ -40,9 +40,9 @@ const config = {
   external: [
     'react',
     'react-dom',
-    'react-is',
     'react-konva',
     'react-measure',
+    'konva',
     'styled-components',
   ],
 };
