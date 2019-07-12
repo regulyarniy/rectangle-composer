@@ -7,6 +7,9 @@ import EditableRectangle from '../EditableRectangle';
 
 /**
  * Composer is a 2D plane where you can add and edit rectangles with intersection checks
+ * Click on empty space to create rectangle
+ * Click on existing rectangle to edit
+ * All relative units passed to Composer is recalculated responsively to grid size
  */
 const Composer = props => {
   const {
@@ -16,6 +19,7 @@ const Composer = props => {
     wrapperClassName,
     gridClassName,
     onChange,
+    newRectangleProps,
   } = props;
 
   const [rectangles, setRectangles] = useState(initialRectangles);
@@ -72,16 +76,32 @@ const Composer = props => {
         onEndEdit={handleUpdateEditedRectangle}
         {...getRectProps(rectangles[editedIndex], editedIndex)}
       >
-        <Text text="*" fontSize={20} />
+        <Text text="*" fontSize={20} fill="black" />
+        <Text x={5} text="*" fontSize={20} fill="white" />
       </EditableRectangle>
     );
 
+  const handleAddRectangle = event => {
+    // eslint-disable-next-line no-param-reassign
+    event.cancelBubble = true;
+    const { layerX: x, layerY: y } = event.evt;
+    const { width, height, ...restRectangleProps } = newRectangleProps;
+    const newRectangles = JSON.parse(JSON.stringify(rectangles));
+    const left = x / widthRatio;
+    const top = y / heightRatio;
+    const right = left + width;
+    const bottom = top + height;
+    newRectangles.push({ ...restRectangleProps, left, top, right, bottom });
+    setRectangles(newRectangles);
+    onChange(newRectangles);
+  };
 
   return (
     <Field
       onGridResize={setGridDimensions}
       wrapperClassName={wrapperClassName}
       gridClassName={gridClassName}
+      stageProps={{ onClick: handleAddRectangle }}
     >
       {visualizedRectangles}
       {editedRectangle}
@@ -125,12 +145,21 @@ Composer.propTypes = {
    * return array of new rectangles
    */
   onChange: PropTypes.func,
+  /**
+   * New rectangle props
+   * At least width and height in relative units is required
+   */
+  newRectangleProps: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+  }),
 };
 
 Composer.defaultProps = {
   wrapperClassName: '',
   gridClassName: '',
   onChange: () => {},
+  newRectangleProps: { width: 10, height: 10, fill: 'black' },
 };
 
 export default Composer;

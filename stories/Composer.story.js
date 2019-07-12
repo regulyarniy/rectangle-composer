@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { number } from '@storybook/addon-knobs';
+import { number, text } from '@storybook/addon-knobs';
 import { Composer } from '../src';
 
 export const ComposerStory = () => {
@@ -32,6 +32,11 @@ export const ComposerStory = () => {
         wrapperClassName="composer"
         gridClassName="grid"
         onChange={setInitialBlocks}
+        newRectangleProps={{
+          width: number('new rectangle width', 50),
+          height: number('new rectangle height', 50),
+          fill: text('new rectangle fill(hex only)', '#000000'),
+        }}
       />
     </div>
   );
