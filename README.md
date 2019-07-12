@@ -24,7 +24,7 @@ konva, react-konva and styled-components are peer dependencies
 
 ## Usage
 
-###Basic:
+### Basic:
 
 Import `Composer` component from `rectangle-composer` for basic usage
 
@@ -98,6 +98,7 @@ Issues, PR and discussions are welcome!
 
 [Storybook with use cases and prop descriptions](https://regulyarniy.github.io/rectangle-composer/)
 
+[Codesandbox with basic usage](https://codesandbox.io/s/rectangle-composer-7lfi4)
 
 ## Boilerplate used
 
