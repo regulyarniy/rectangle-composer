@@ -1,6 +1,6 @@
 {
   "name": "rectangle-composer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A React component for visual editing rectangles in 2D plane",
   "main": "./dist/index.js",
   "repository": "https://github.com/regulyarniy/rectangle-composer",
