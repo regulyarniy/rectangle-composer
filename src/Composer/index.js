@@ -4,12 +4,14 @@ import { Text } from 'react-konva';
 import Field from '../Field';
 import Rectangle from '../Rectangle';
 import EditableRectangle from '../EditableRectangle';
+import { getDragBoundFunc } from './getDragBoundFunc';
+import { getBoundBoxFunc } from './getBoundBoxFunc';
 
 /**
- * Composer is a 2D plane where you can add and edit rectangles with intersection checks
- * Click on empty space to create rectangle
- * Click on existing rectangle to edit
- * All relative units passed to Composer is recalculated responsively to grid size
+ * Composer is a 2D plane where you can add and edit rectangles with intersection checks.
+ * Click on empty space to create rectangle.
+ * Click on existing rectangle to edit.
+ * All relative units passed to Composer is recalculated responsively to grid size.
  */
 const Composer = props => {
   const {
@@ -47,9 +49,11 @@ const Composer = props => {
     index,
   });
 
-  const visualizedRectangles = rectangles
+  const rectanglesWithoutEdited = rectangles
     .map(getRectProps)
-    .filter(rectProps => rectProps.index !== editedIndex)
+    .filter(rectProps => rectProps.index !== editedIndex);
+
+  const visualizedRectangles = rectanglesWithoutEdited
     .map(rectProps => (
       <Rectangle
         key={`rect-${rectProps.index}`}
@@ -69,12 +73,30 @@ const Composer = props => {
     onChange(newRectangles);
   };
 
-  const editedRectangle = editedIndex === null
+  const isEditMode = editedIndex === null;
+
+  const editedRectangleProps = isEditMode
+    ? null
+    : getRectProps(rectangles[editedIndex], editedIndex);
+
+  const boundParamsForIntersectionPreventing = isEditMode ? null : {
+    x: editedRectangleProps.x,
+    y: editedRectangleProps.y,
+    canvasWidth: gridDimensions.width,
+    canvasHeight: gridDimensions.height,
+    width: editedRectangleProps.width,
+    height: editedRectangleProps.height,
+    obstacles: rectanglesWithoutEdited,
+  };
+
+  const editedRectangle = isEditMode
     ? null
     : (
       <EditableRectangle
         onEndEdit={handleUpdateEditedRectangle}
-        {...getRectProps(rectangles[editedIndex], editedIndex)}
+        {...editedRectangleProps}
+        dragBoundFunc={getDragBoundFunc(boundParamsForIntersectionPreventing)}
+        boundBoxFunc={getBoundBoxFunc(boundParamsForIntersectionPreventing)}
       >
         <Text text="*" fontSize={20} fill="black" />
         <Text x={5} text="*" fontSize={20} fill="white" />

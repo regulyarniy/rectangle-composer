@@ -22,7 +22,14 @@ export const ComposerStory = () => {
         {`.composer .grid {${gridStyles}}`}
       </style>
       <div className="panel">
+        * Click on empty space to create rectangle.
+        <br />
+        * Click on existing rectangle to edit.
+        <br />
+        * All relative units passed to Composer is recalculated responsively to grid size.
+        <br />
         Boxes:
+        <br />
         {initialBlocks.map(JSON.stringify)}
       </div>
       <Composer
