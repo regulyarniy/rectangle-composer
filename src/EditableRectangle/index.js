@@ -1,12 +1,7 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Transformer, Group } from 'react-konva';
 import Rectangle from '../Rectangle';
-
-let debounceSizeChangeTimeout = null;
-let debounceCoordinatesChangeTimeout = null;
-const DEBOUNCE_DELAY = 10;
-const TWEEN_DURATION = 0.3;
 
 /**
  * Draggable & Resizable Rectangle
@@ -27,93 +22,25 @@ const EditableRectangle = props => {
     ...rectProps
   } = props;
 
-  const [isEdited, setIsEdited] = useState(false);
-
   const groupRef = forwardRef || useRef();
   const rectRef = useRef();
   const transformerRef = useRef();
 
-  const updateScene = () => {
-    transformerRef.current.forceUpdate();
-    transformerRef.current.getLayer().batchDraw();
-  };
-
   useEffect(() => {
     transformerRef.current.attachTo(groupRef.current);
-    groupRef.current.x(x);
-    groupRef.current.y(y);
-    rectRef.current.width(width);
-    rectRef.current.height(height);
-    updateScene();
-  }, []);
-
-  useEffect(() => {
-    if (!isEdited) {
-      clearTimeout(debounceSizeChangeTimeout);
-      debounceSizeChangeTimeout = setTimeout(() => {
-        const rect = rectRef.current;
-        const group = groupRef.current;
-
-        const childNodes = group.getChildren(
-          node => node.getClassName() !== 'Rect',
-        );
-        childNodes.forEach(node => node.opacity(0));
-        updateScene();
-
-        rect.to({
-          width,
-          height,
-          onFinish: () => {
-            group.scaleX(1);
-            group.scaleY(1);
-            updateScene();
-            childNodes.forEach(node => node.to({ duration: TWEEN_DURATION, opacity: 1 }));
-          },
-        });
-      }, DEBOUNCE_DELAY);
-    } else {
-      updateScene();
-    }
-  }, [width, height]);
-
-  useEffect(() => {
-    if (!isEdited) {
-      clearTimeout(debounceCoordinatesChangeTimeout);
-      debounceCoordinatesChangeTimeout = setTimeout(() => {
-        const group = groupRef.current;
-
-        const childNodes = group.getChildren(
-          node => node.getClassName() !== 'Rect',
-        );
-        childNodes.forEach(node => node.opacity(0));
-        updateScene();
-
-        groupRef.current.to({
-          x,
-          y,
-          duration: TWEEN_DURATION,
-          onFinish: () => {
-            updateScene();
-            childNodes.forEach(node => node.to({ duration: TWEEN_DURATION, opacity: 1 }));
-          },
-        });
-      }, DEBOUNCE_DELAY);
-    } else {
-      updateScene();
-    }
-  }, [x, y]);
+    transformerRef.current.forceUpdate();
+    transformerRef.current.getLayer().batchDraw();
+  }, [x, y, width, height]);
 
   const handleStartEdit = event => {
     // eslint-disable-next-line no-param-reassign
     event.cancelBubble = true;
-    setIsEdited(true);
     onStartEdit();
   };
 
   const handleDragEnd = event => {
     const { x: newX, y: newY } = event.target.attrs;
     onEndEdit({ x: newX, y: newY, width, height });
-    setIsEdited(false);
   };
 
   const handleResizeEnd = () => {
@@ -132,7 +59,6 @@ const EditableRectangle = props => {
       width: newWidth,
       height: newHeight,
     });
-    setIsEdited(false);
   };
 
   const handleMouseEnter = () => {
@@ -143,6 +69,10 @@ const EditableRectangle = props => {
     groupRef.current.getStage().container().style.cursor = 'default';
   };
 
+  const handleEditableClick = event => {
+    // eslint-disable-next-line no-param-reassign
+    event.cancelBubble = true;
+  };
 
   return (
     <Fragment>
@@ -156,8 +86,11 @@ const EditableRectangle = props => {
         onTransformEnd={handleResizeEnd}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        x={x}
+        y={y}
+        onClick={handleEditableClick}
       >
-        <Rectangle forwardRef={rectRef} {...rectProps}>
+        <Rectangle width={width} height={height} forwardRef={rectRef} {...rectProps}>
           {children}
         </Rectangle>
       </Group>
